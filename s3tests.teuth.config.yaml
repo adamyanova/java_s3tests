@@ -1,0 +1,35 @@
+DEFAULT :
+    host : 
+    port : 
+    is_secure : false
+
+fixtures :
+    bucket_prefix : test
+
+s3main :
+    access_key : 0555b35654ad1656d804
+    access_secret : h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
+    bucket : bucket1
+    region : mexico
+    display_name :
+    email : 
+    is_secure : false
+    SSE : AES256
+    kmskeyid : barbican_key_id
+
+    s3dir : folder
+    dir : '../data'
+
+s3alt :
+    access_key : NOPQRSTUVWXYZABCDEFG
+    access_secret : nopqrstuvwxyzabcdefghijklmnabcdefghijklm
+    bucket : bucket1
+    region : mexico
+    display_name :
+    email : 
+    SSE : AES256
+    kmskeyid : barbican_key_id
+    is_secure : false
+
+    s3dir : folder
+    dir : '../data'

@@ -2,5 +2,9 @@
 build/
 target/
 lib/
+bin/
 test-output/
-
+.project
+.settings/ 
+.vscode/ 
+.classpath 

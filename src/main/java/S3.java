@@ -95,6 +95,12 @@ public class S3 {
 		String secretKey = prop.getProperty("access_secret");
 		Boolean issecure = Boolean.parseBoolean(prop.getProperty("is_secure"));
 		
+		System.out.printf(" JAVA Config is: ");
+		System.out.printf(" %s", endpoint);
+		System.out.printf(" %s", accessKey);
+		System.out.printf(" %s", secretKey);
+		System.out.printf(" %b", issecure);
+
 		AmazonS3 svc = getConn(endpoint, accessKey, secretKey, issecure);
 
 		return svc;
@@ -126,7 +132,7 @@ public class S3 {
 	
 	public String getPrefix()
 	{
-		String prefix = "jnan";
+		String prefix = "test";
 		
 		return prefix;
 	}
@@ -171,7 +177,6 @@ public class S3 {
 		if (issecure){
 			clientConfig.setProtocol(Protocol.HTTP);
 		}else {
-			
 			clientConfig.setProtocol(Protocol.HTTPS);
 		}
 		

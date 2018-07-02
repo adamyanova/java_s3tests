@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+sourceCompatibility = 1.8
+
 repositories {
     mavenCentral()
 
@@ -11,7 +13,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.0.RC2"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
     }
 }
 apply plugin: "io.spring.dependency-management"
@@ -24,9 +26,9 @@ dependencyManagement {
 
 dependencies {
 
-	compile 'com.amazonaws:aws-java-sdk-core:1.11.166'
-    compile 'com.amazonaws:aws-java-sdk:1.11.166'
-    compile 'com.amazonaws:aws-java-sdk-s3:1.11.166'
+	compile 'com.amazonaws:aws-java-sdk-core:1.11.228'
+    compile 'com.amazonaws:aws-java-sdk:1.11.228'
+    compile 'com.amazonaws:aws-java-sdk-s3:1.11.228'
     compile 'com.amazonaws:aws-java-sdk-sqs'
 
     compile 'org.seleniumhq.selenium:selenium-server:2.44.0'
