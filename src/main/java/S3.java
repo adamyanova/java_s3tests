@@ -330,7 +330,7 @@ public class S3 {
 		ObjectMetadata metadataResult = svc.getObjectMetadata(metadataRequest);
 		long objectSize = metadataResult.getContentLength(); // in bytes
 
-		long partSize = 5 * 1024 * 1024;
+		long partSize = size;
 
 		long bytePosition = 0;
 		for (int i = 1; bytePosition < objectSize; i++) {
