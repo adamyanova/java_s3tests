@@ -108,6 +108,8 @@ public class S3 {
 		}
 
 		clientConfig.withClientExecutionTimeout(10000);
+		clientConfig.withConnectionTimeout(5000);
+		clientConfig.withMaxErrorRetry(20);
 
 		System.out.printf("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure);
 
