@@ -1021,7 +1021,7 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 		String key = "key1";
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 512 * 1024 * 1024);
+		utils.createFile(filePath, 500 * 1024 * 1024);
 		String destPath = "./data/file2.mpg";
 
 		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc)
