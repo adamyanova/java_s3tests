@@ -1990,7 +1990,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 		String key = "key1";
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 256 * 1024 * 1024);
 		String destPath = "./data/file2.mpg";
 
 		TransferManager tm = TransferManagerBuilder.standard().withMinimumUploadPartSize(512 * 1024l)
