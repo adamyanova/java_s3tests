@@ -1544,7 +1544,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 
 		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 5 * 1024 * 1024,
 				filePath);
@@ -1579,7 +1579,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 		long size = 5 * 1024 * 1024;
 
 		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, size, filePath);
@@ -1594,7 +1594,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 		long size = 5 * 1024 * 1024;
 
 		List<PartETag> partETags = new ArrayList<PartETag>();
@@ -1652,7 +1652,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 
 		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 5 * 1024 * 1024,
 				filePath);
@@ -1667,7 +1667,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 		long size = 5 * 1024 * 1024;
 
 		svc.putObject(bucket_name, key, "foo");
@@ -1708,7 +1708,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
@@ -1745,7 +1745,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 
 		Upload upl = utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
 
@@ -1807,7 +1807,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 		String key = "key1";
 
 		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc).build();
@@ -1974,7 +1974,7 @@ public class ObjectTest {
 		String dstDir = "./downloads";
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 40 * 1024 * 1024);
+		utils.createFile(filePath, 96 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
