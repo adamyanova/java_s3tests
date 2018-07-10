@@ -332,13 +332,14 @@ public class S3 {
 		long partSize = size;
 
 		long bytePosition = 0;
-		for (int i = 1; bytePosition < objectSize; i++) {
+		int partNum = 1;
+		while (bytePosition < objectSize) {
+			long lastByte = Math.min(bytePosition + partSize - 1, objectSize - 1);
 			CopyPartRequest copyRequest = new CopyPartRequest().withDestinationBucketName(dstbkt)
 					.withDestinationKey(dstkey).withSourceBucketName(srcbkt).withSourceKey(srckey)
 					.withUploadId(initResult.getUploadId()).withFirstByte(bytePosition)
-					.withLastByte(
-							bytePosition + partSize - 1 >= objectSize ? objectSize - 1 : bytePosition + partSize - 1)
-					.withPartNumber(i);
+					.withLastByte(lastByte)
+					.withPartNumber(partNum++);
 
 			copyResponses.add(svc.copyPart(copyRequest));
 			bytePosition += partSize;
