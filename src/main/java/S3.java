@@ -344,10 +344,10 @@ public class S3 {
 					.withLastByte(lastByte)
 					.withPartNumber(partNum++);
 
-			// CopyPartResult res = svc.copyPart(copyRequest);
+			CopyPartResult res = svc.copyPart(copyRequest);
+			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getPartETag().getETag());
 
-			partETags.add(svc.copyPart(copyRequest).getPartETag());
-			// copyResponses.add(res);
+			partETags.add(res.getPartETag());
 			bytePosition += partSize;
 		}
 		for (PartETag p : partETags) {
