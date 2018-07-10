@@ -21,15 +21,15 @@ apply plugin: "io.spring.dependency-management"
 
 dependencyManagement {
     imports {
-        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.350'
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.11.364'
     }
 }
 
 dependencies {
 
-	compile 'com.amazonaws:aws-java-sdk-core:1.11.351'
-    compile 'com.amazonaws:aws-java-sdk:1.11.351'
-    compile 'com.amazonaws:aws-java-sdk-s3:1.11.351'
+	compile 'com.amazonaws:aws-java-sdk-core:1.11.364'
+    compile 'com.amazonaws:aws-java-sdk:1.11.364'
+    compile 'com.amazonaws:aws-java-sdk-s3:1.11.364'
     compile 'com.amazonaws:aws-java-sdk-sqs'
 
     compile 'org.seleniumhq.selenium:selenium-server:2.44.0'
