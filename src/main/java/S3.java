@@ -354,7 +354,9 @@ public class S3 {
 		List<PartETag> etags = new ArrayList<PartETag>();
 		for (CopyPartResult response : responses) {
 			etags.add(new PartETag(response.getPartNumber(), response.getETag()));
+			System.out.printf("Part NUM: %d %n ETag: %s %n", response.getPartNumber(), response.getETag());
 		}
+		System.out.printf("ETAGS: %n %s %n", etags.toString());
 		return etags;
 	}
 
