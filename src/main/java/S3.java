@@ -333,6 +333,9 @@ public class S3 {
 
 		long bytePosition = 0;
 		int partNum = 1;
+
+		List<PartETag> partETags = new ArrayList<PartETag>();
+
 		while (bytePosition < objectSize) {
 			long lastByte = Math.min(bytePosition + partSize - 1, objectSize - 1);
 			CopyPartRequest copyRequest = new CopyPartRequest().withDestinationBucketName(dstbkt)
@@ -341,12 +344,17 @@ public class S3 {
 					.withLastByte(lastByte)
 					.withPartNumber(partNum++);
 
-			CopyPartResult res = svc.copyPart(copyRequest);
-			copyResponses.add(res);
+			// CopyPartResult res = svc.copyPart(copyRequest);
+
+			partETags.add(svc.copyPart(copyRequest).getPartETag());
+			// copyResponses.add(res);
 			bytePosition += partSize;
 		}
+		for (PartETag p : partETags) {
+			System.out.printf("Part NUM: %d %n ETag: %s %n", p.getPartNumber(), p.getETag());
+		}
 		CompleteMultipartUploadRequest completeRequest = new CompleteMultipartUploadRequest(dstbkt, dstkey,
-				initResult.getUploadId(), GetETags(copyResponses));
+				initResult.getUploadId(), partETags);
 
 		return completeRequest;
 	}
