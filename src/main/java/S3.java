@@ -341,7 +341,8 @@ public class S3 {
 					.withLastByte(lastByte)
 					.withPartNumber(partNum++);
 
-			copyResponses.add(svc.copyPart(copyRequest));
+			CopyPartResult res = svc.copyPart(copyRequest);
+			copyResponses.add(res);
 			bytePosition += partSize;
 		}
 		CompleteMultipartUploadRequest completeRequest = new CompleteMultipartUploadRequest(dstbkt, dstkey,
