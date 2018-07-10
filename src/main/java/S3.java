@@ -287,7 +287,7 @@ public class S3 {
 		return bucket;
 	}
 
-	public <PartETag> CompleteMultipartUploadRequest multipartUploadLLAPI(AmazonS3 svc, String bucket, String key,
+	public CompleteMultipartUploadRequest multipartUploadLLAPI(AmazonS3 svc, String bucket, String key,
 			long size, String filePath) {
 
 		List<PartETag> partETags = new ArrayList<PartETag>();
