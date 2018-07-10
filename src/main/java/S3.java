@@ -39,7 +39,7 @@ import com.amazonaws.services.s3.model.ListVersionsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.S3VersionSummary;
 import com.amazonaws.services.s3.model.SSECustomerKey;
@@ -54,7 +54,6 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.IOUtils;
-import com.amazonaws.util.StringUtils;
 
 public class S3 {
 	private static S3 instance = null;
@@ -350,10 +349,10 @@ public class S3 {
 		return completeRequest;
 	}
 
-	static List<com.amazonaws.services.s3.model.PartETag> GetETags(List<CopyPartResult> responses) {
-		List<com.amazonaws.services.s3.model.PartETag> etags = new ArrayList<com.amazonaws.services.s3.model.PartETag>();
+	static List<PartETag> GetETags(List<CopyPartResult> responses) {
+		List<PartETag> etags = new ArrayList<PartETag>();
 		for (CopyPartResult response : responses) {
-			etags.add(new com.amazonaws.services.s3.model.PartETag(response.getPartNumber(), response.getETag()));
+			etags.add(new PartETag(response.getPartNumber(), response.getETag()));
 		}
 		return etags;
 	}
