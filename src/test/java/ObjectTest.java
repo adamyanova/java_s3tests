@@ -1708,7 +1708,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 20 * 1024 * 1024);
+		utils.createFile(filePath, 80 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
