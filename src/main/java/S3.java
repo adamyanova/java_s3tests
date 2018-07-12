@@ -374,11 +374,11 @@ public class S3 {
 		try {
 			xfer.waitForCompletion();
 		} catch (AmazonServiceException e) {
-
+			e.printStackTrace();
 		} catch (AmazonClientException e) {
-
+			e.printStackTrace();
 		} catch (InterruptedException e) {
-
+			e.printStackTrace();
 		}
 	}
 
