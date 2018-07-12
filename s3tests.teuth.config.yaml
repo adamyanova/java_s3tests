@@ -3,7 +3,7 @@ bucket_prefix : joannah
 s3main : 
   access_key : 
   access_secret : 
-  region : us-east-1 
+  region : mexico 
   endpoint : 
   port :  
   display_name : 
