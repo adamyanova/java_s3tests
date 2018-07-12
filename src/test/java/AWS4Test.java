@@ -555,40 +555,40 @@ public class AWS4Test {
 		}
 	}
 
-	@Test(description = "multipart uploads for small to big sizes using LLAPI, succeeds!")
-	public void testMultipartUploadMultipleSizesLLAPIAWS4() {
+	// @Test(description = "multipart uploads for small to big sizes using LLAPI, succeeds!")
+	// public void testMultipartUploadMultipleSizesLLAPIAWS4() {
 
-		String bucket_name = utils.getBucketName(prefix);
-		String key = "key1";
-		svc.createBucket(new CreateBucketRequest(bucket_name));
+	// 	String bucket_name = utils.getBucketName(prefix);
+	// 	String key = "key1";
+	// 	svc.createBucket(new CreateBucketRequest(bucket_name));
 
-		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
+	// 	String filePath = "./data/file.mpg";
+	// 	utils.createFile(filePath, 23 * 1024 * 1024);
 
-		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 5 * 1024 * 1024,
-				filePath);
-		svc.completeMultipartUpload(resp);
+	// 	CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 5 * 1024 * 1024,
+	// 			filePath);
+	// 	svc.completeMultipartUpload(resp);
 
-		CompleteMultipartUploadRequest resp2 = utils.multipartUploadLLAPI(svc, bucket_name, key,
-				5 * 1024 * 1024 + 100 * 1024, filePath);
-		svc.completeMultipartUpload(resp2);
+	// 	CompleteMultipartUploadRequest resp2 = utils.multipartUploadLLAPI(svc, bucket_name, key,
+	// 			5 * 1024 * 1024 + 100 * 1024, filePath);
+	// 	svc.completeMultipartUpload(resp2);
 
-		CompleteMultipartUploadRequest resp3 = utils.multipartUploadLLAPI(svc, bucket_name, key,
-				5 * 1024 * 1024 + 600 * 1024, filePath);
-		svc.completeMultipartUpload(resp3);
+	// 	CompleteMultipartUploadRequest resp3 = utils.multipartUploadLLAPI(svc, bucket_name, key,
+	// 			5 * 1024 * 1024 + 600 * 1024, filePath);
+	// 	svc.completeMultipartUpload(resp3);
 
-		CompleteMultipartUploadRequest resp4 = utils.multipartUploadLLAPI(svc, bucket_name, key,
-				10 * 1024 * 1024 + 100 * 1024, filePath);
-		svc.completeMultipartUpload(resp4);
+	// 	CompleteMultipartUploadRequest resp4 = utils.multipartUploadLLAPI(svc, bucket_name, key,
+	// 			10 * 1024 * 1024 + 100 * 1024, filePath);
+	// 	svc.completeMultipartUpload(resp4);
 
-		CompleteMultipartUploadRequest resp5 = utils.multipartUploadLLAPI(svc, bucket_name, key,
-				10 * 1024 * 1024 + 600 * 1024, filePath);
-		svc.completeMultipartUpload(resp5);
+	// 	CompleteMultipartUploadRequest resp5 = utils.multipartUploadLLAPI(svc, bucket_name, key,
+	// 			10 * 1024 * 1024 + 600 * 1024, filePath);
+	// 	svc.completeMultipartUpload(resp5);
 
-		CompleteMultipartUploadRequest resp6 = utils.multipartUploadLLAPI(svc, bucket_name, key, 10 * 1024 * 1024,
-				filePath);
-		svc.completeMultipartUpload(resp6);
-	}
+	// 	CompleteMultipartUploadRequest resp6 = utils.multipartUploadLLAPI(svc, bucket_name, key, 10 * 1024 * 1024,
+	// 			filePath);
+	// 	svc.completeMultipartUpload(resp6);
+	// }
 
 	@Test(description = "multipart uploads for small file using LLAPI, succeeds!")
 	public void testMultipartUploadSmallLLAPIAWS4() {
