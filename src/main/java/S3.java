@@ -345,7 +345,7 @@ public class S3 {
 					.withPartNumber(partNum++);
 
 			CopyPartResult res = svc.copyPart(copyRequest);
-			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getPartETag().getETag());
+			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getETag());
 
 			partETags.add(res.getPartETag());
 			bytePosition += partSize;
