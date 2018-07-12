@@ -106,8 +106,9 @@ public class S3 {
 			clientConfig.setProtocol(Protocol.HTTP);
 		}
 
-		clientConfig.withClientExecutionTimeout(10000);
-		clientConfig.withConnectionTimeout(5000);
+		clientConfig.withClientExecutionTimeout(120 * 1000);
+		clientConfig.withConnectionTimeout(120 * 000);
+		clientConfig.withSocketTimeout(120 * 000);
 		clientConfig.withMaxErrorRetry(20);
 
 		System.out.printf("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure);
