@@ -41,6 +41,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.S3ResponseMetadata;
 import com.amazonaws.services.s3.model.S3VersionSummary;
 import com.amazonaws.services.s3.model.SSECustomerKey;
 import com.amazonaws.services.s3.model.UploadPartRequest;
@@ -54,6 +55,7 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.IOUtils;
+import com.google.common.io.BaseEncoding;
 
 public class S3 {
 	private static S3 instance = null;
@@ -346,6 +348,9 @@ public class S3 {
 					.withPartNumber(partNum++);
 
 			CopyPartResult res = svc.copyPart(copyRequest);
+
+			S3ResponseMetadata md = svc.getCachedResponseMetadata(copyRequest);
+			System.out.println("Host ID: " + md.getHostId() + " RequestID: " + md.getRequestId());
 			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getETag());
 
 			partETags.add(res.getPartETag());

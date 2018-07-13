@@ -29,6 +29,7 @@ import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.UploadPartRequest;
+import com.amazonaws.services.s3.model.UploadPartResult;
 import com.amazonaws.services.s3.transfer.Copy;
 import com.amazonaws.services.s3.transfer.Download;
 import com.amazonaws.services.s3.transfer.MultipleFileDownload;
@@ -630,10 +631,11 @@ public class AWS4Test {
 		for (int i = 1; filePosition < contentLength; i++) {
 			partSize = Math.min(partSize, (contentLength - filePosition));
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
-					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
+					.withUploadId(initResponse.getUploadId()).withFileOffset(filePosition)
 					.withFile(file).withPartSize(partSize);
-			svc.uploadPart(uploadRequest).setPartNumber(999);
-			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
+			UploadPartResult res = svc.uploadPart(uploadRequest);
+			res.setPartNumber(999);
+			partETags.add((PartETag) res.getPartETag());
 
 			filePosition += partSize;
 		}
@@ -730,7 +732,7 @@ public class AWS4Test {
 
 	// 	String filePath = "./data/file.mpg";
 	// 	utils.createFile(filePath, 23 * 1024 * 1024);
-	// 	Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+		// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 	// 	Assert.assertEquals(upl.isDone(), true);
 
 	// 	CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
