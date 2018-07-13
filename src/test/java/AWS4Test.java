@@ -632,8 +632,9 @@ public class AWS4Test {
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
 					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
 					.withFile(file).withPartSize(partSize);
-			svc.uploadPart(uploadRequest).setPartNumber(999);
-			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
+			UploadPartResult res = svc.uploadPart(uploadRequest);
+			res.setPartNumber(999);
+			partETags.add((PartETag) res.getPartETag());
 			
 			filePosition += partSize + 512 * 1024;
 		}
