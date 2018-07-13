@@ -1697,45 +1697,45 @@ public class ObjectTest {
 		}
 	}
 
-	// @Test(description = "multipart copy for small file using LLAPI, succeeds!")
-	// public void testMultipartCopyMultipleSizesLLAPI() {
+	@Test(description = "multipart copy for small file using LLAPI, succeeds!")
+	public void testMultipartCopyMultipleSizesLLAPI() {
 
-	// 	String src_bkt = utils.getBucketName(prefix);
-	// 	String dst_bkt = utils.getBucketName(prefix);
-	// 	String key = "key1";
+		String src_bkt = utils.getBucketName(prefix);
+		String dst_bkt = utils.getBucketName(prefix);
+		String key = "key1";
 
-	// 	svc.createBucket(new CreateBucketRequest(src_bkt));
-	// 	svc.createBucket(new CreateBucketRequest(dst_bkt));
+		svc.createBucket(new CreateBucketRequest(src_bkt));
+		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
-	// 	String filePath = "./data/file.mpg";
-	// 	utils.createFile(filePath, 23 * 1024 * 1024);
-	// 	Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
-	// 	Assert.assertEquals(upl.isDone(), true);
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
+		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+		Assert.assertEquals(upl.isDone(), true);
 
-	// 	CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			5 * 1024 * 1024);
-	// 	svc.completeMultipartUpload(resp);
+		CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				5 * 1024 * 1024);
+		svc.completeMultipartUpload(resp);
 
-	// 	CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			5 * 1024 * 1024 + 100 * 1024);
-	// 	svc.completeMultipartUpload(resp2);
+		CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				5 * 1024 * 1024 + 100 * 1024);
+		svc.completeMultipartUpload(resp2);
 
-	// 	CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			5 * 1024 * 1024 + 600 * 1024);
-	// 	svc.completeMultipartUpload(resp3);
+		CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				5 * 1024 * 1024 + 600 * 1024);
+		svc.completeMultipartUpload(resp3);
 
-	// 	CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			10 * 1024 * 1024 + 100 * 1024);
-	// 	svc.completeMultipartUpload(resp4);
+		CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				10 * 1024 * 1024 + 100 * 1024);
+		svc.completeMultipartUpload(resp4);
 
-	// 	CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			10 * 1024 * 1024 + 600 * 1024);
-	// 	svc.completeMultipartUpload(resp5);
+		CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				10 * 1024 * 1024 + 600 * 1024);
+		svc.completeMultipartUpload(resp5);
 
-	// 	CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			10 * 1024 * 1024);
-	// 	svc.completeMultipartUpload(resp6);
-	// }
+		CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				10 * 1024 * 1024);
+		svc.completeMultipartUpload(resp6);
+	}
 
 	@Test(description = "Upload of a  file using HLAPI, succeeds!")
 	public void testUploadFileHLAPIBigFile() {
@@ -1990,7 +1990,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 		String key = "key1";
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 256 * 1024 * 1024);
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		String destPath = "./data/file2.mpg";
 
 		TransferManager tm = TransferManagerBuilder.standard().withMinimumUploadPartSize(512 * 1024l)
