@@ -455,8 +455,8 @@ public class S3 {
 
 		String fname1 = "./data/file.mpg";
 		String fname2 = "./data/sample.txt";
-		createFile(fname1, 20 * 1024 * 1024);
-		createFile(fname2, 20 * 1024);
+		createFile(fname1, 23 * 1024 * 1024);
+		createFile(fname2, 256 * 1024);
 		files.add(new File(fname1));
 		files.add(new File(fname2));
 

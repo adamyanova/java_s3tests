@@ -708,7 +708,7 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/sample.txt";
-		utils.createFile(filePath, 20 * 1024);
+		utils.createFile(filePath, 256 * 1024);
 		long size = 5 * 1024 * 1024;
 
 		try {
@@ -778,7 +778,7 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
+		utils.createFile(filePath, 512 * 1024 * 1024);
 
 		Upload upl = utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
 
@@ -793,6 +793,7 @@ public class AWS4Test {
 		String key = "key1";
 
 		String filePath = "./data/sample.txt";
+		utils.createFile(filePath, 256 * 1024);
 
 		try {
 			utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
