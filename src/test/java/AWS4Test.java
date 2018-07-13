@@ -635,7 +635,7 @@ public class AWS4Test {
 			svc.uploadPart(uploadRequest).setPartNumber(999);
 			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
 			
-			filePosition += partSize;
+			filePosition += partSize + 512 * 1024;
 		}
 
 		CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucket_name, key,
