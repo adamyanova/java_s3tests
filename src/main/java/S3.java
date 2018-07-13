@@ -350,16 +350,16 @@ public class S3 {
 		List<PartETag> partETags = new ArrayList<PartETag>();
 		while (bytePosition < objectSize) {
 			partSize = Math.min(partSize, (contentLength - filePosition));
-			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(srcbkt).withKey("key-2-upl")
-					.withUploadId(initResponseUP.getUploadId()).withPartNumber(partNum).withFileOffset(filePosition)
-					.withFile(file).withPartSize(partSize);
+			// UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(srcbkt).withKey("key-2-upl")
+			// 		.withUploadId(initResponseUP.getUploadId()).withPartNumber(partNum).withFileOffset(filePosition)
+			// 		.withFile(file).withPartSize(partSize);
 
 
-			UploadPartResult resUP = svc.uploadPart(uploadRequest);
-			partETags.add((PartETag) resUP.getPartETag());
-			System.out.printf("URES: Part NUM: %d %n ETag: %s %n", resUP.getPartNumber(), resUP.getETag());
+			// UploadPartResult resUP = svc.uploadPart(uploadRequest);
+			// partETags.add((PartETag) resUP.getPartETag());
+			// System.out.printf("URES: Part NUM: %d %n ETag: %s %n", resUP.getPartNumber(), resUP.getETag());
 
-			filePosition += partSize;
+			// filePosition += partSize;
 
 			long lastByte = Math.min(bytePosition + partSize - 1, objectSize - 1);
 			CopyPartRequest copyRequest = new CopyPartRequest().withDestinationBucketName(dstbkt)
@@ -371,7 +371,7 @@ public class S3 {
 			CopyPartResult res = svc.copyPart(copyRequest);
 			System.out.printf("CopyRES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getETag());
 
-			// partETags.add(res.getPartETag());
+			partETags.add(res.getPartETag());
 			bytePosition += partSize;
 		}
 		for (PartETag p : partETags) {
