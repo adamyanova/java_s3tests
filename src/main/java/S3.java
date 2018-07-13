@@ -45,6 +45,7 @@ import com.amazonaws.services.s3.S3ResponseMetadata;
 import com.amazonaws.services.s3.model.S3VersionSummary;
 import com.amazonaws.services.s3.model.SSECustomerKey;
 import com.amazonaws.services.s3.model.UploadPartRequest;
+import com.amazonaws.services.s3.model.UploadPartResult;
 import com.amazonaws.services.s3.model.VersionListing;
 import com.amazonaws.services.s3.transfer.Copy;
 import com.amazonaws.services.s3.transfer.Download;
@@ -329,6 +330,15 @@ public class S3 {
 		InitiateMultipartUploadResult initResult = svc.initiateMultipartUpload(initiateRequest);
 		GetObjectMetadataRequest metadataRequest = new GetObjectMetadataRequest(srcbkt, srckey);
 
+		InitiateMultipartUploadRequest initRequestUP = new InitiateMultipartUploadRequest(srcbkt, "key-2-upl");
+		InitiateMultipartUploadResult initResponseUP = svc.initiateMultipartUpload(initRequestUP);
+
+		File file = new File("./data/file.mpg");
+		long contentLength = file.length();
+
+		long filePosition = 0;
+
+
 		ObjectMetadata metadataResult = svc.getObjectMetadata(metadataRequest);
 		long objectSize = metadataResult.getContentLength(); // in bytes
 
@@ -338,8 +348,19 @@ public class S3 {
 		int partNum = 1;
 
 		List<PartETag> partETags = new ArrayList<PartETag>();
-
 		while (bytePosition < objectSize) {
+			partSize = Math.min(partSize, (contentLength - filePosition));
+			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(srcbkt).withKey("key-2-upl")
+					.withUploadId(initResponseUP.getUploadId()).withPartNumber(partNum).withFileOffset(filePosition)
+					.withFile(file).withPartSize(partSize);
+
+
+			UploadPartResult resUP = svc.uploadPart(uploadRequest);
+			partETags.add((PartETag) resUP.getPartETag());
+			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", resUP.getPartNumber(), resUP.getETag());
+
+			filePosition += partSize;
+
 			long lastByte = Math.min(bytePosition + partSize - 1, objectSize - 1);
 			CopyPartRequest copyRequest = new CopyPartRequest().withDestinationBucketName(dstbkt)
 					.withDestinationKey(dstkey).withSourceBucketName(srcbkt).withSourceKey(srckey)
@@ -349,11 +370,7 @@ public class S3 {
 
 			CopyPartResult res = svc.copyPart(copyRequest);
 
-			S3ResponseMetadata md = svc.getCachedResponseMetadata(copyRequest);
-			System.out.println("Host ID: " + md.getHostId() + " RequestID: " + md.getRequestId());
-			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getETag());
-
-			partETags.add(res.getPartETag());
+			// partETags.add(res.getPartETag());
 			bytePosition += partSize;
 		}
 		for (PartETag p : partETags) {
