@@ -615,7 +615,7 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
+		utils.createFile(filePath, 13 * 1024 * 1024);
 
 		List<PartETag> partETags = new ArrayList<PartETag>();
 
@@ -627,7 +627,7 @@ public class AWS4Test {
 		long partSize = 5 * 1024 * 1024;
 
 		long filePosition = 1024 * 1024;
-		for (int i = 7; filePosition < contentLength; i++) {
+		for (int i = 7; filePosition < contentLength; i +=3) {
 			partSize = Math.min(partSize, (contentLength - filePosition));
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
 					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
