@@ -39,6 +39,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.SSECustomerKey;
 import com.amazonaws.services.s3.model.UploadPartRequest;
+import com.amazonaws.services.s3.model.UploadPartResult;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.transfer.Copy;
 import com.amazonaws.services.s3.transfer.Download;
@@ -1611,8 +1612,9 @@ public class ObjectTest {
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
 					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
 					.withFile(file).withPartSize(partSize);
-			svc.uploadPart(uploadRequest).setPartNumber(999);
-			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
+			UploadPartResult res = svc.uploadPart(uploadRequest);
+			res.setPartNumber(999);
+			partETags.add((PartETag) res.getPartETag());
 
 			filePosition += partSize;
 		}

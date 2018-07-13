@@ -644,7 +644,6 @@ public class AWS4Test {
 
 		try {
 			svc.completeMultipartUpload(compRequest);
-			System.out.printf(" %n%n%n COMPLETED MP UPLOAD  %n%n%n");
 		} catch (AmazonServiceException err) {
 			System.out.printf(" %n%n%n COMPLETED MP UPLOAD: INVALID PART  %n%n%n");
 			AssertJUnit.assertEquals(err.getErrorCode(), "InvalidPart");
