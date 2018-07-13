@@ -565,8 +565,8 @@ public class AWS4Test {
 		String filePath = "./data/file.mpg";
 		utils.createFile(filePath, 23 * 1024 * 1024);
 
-		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 5 * 1024 * 1024,
-				filePath);
+		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 
+				5 * 1024 * 1024, filePath);
 		svc.completeMultipartUpload(resp);
 
 		CompleteMultipartUploadRequest resp2 = utils.multipartUploadLLAPI(svc, bucket_name, key,
@@ -632,7 +632,7 @@ public class AWS4Test {
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
 					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
 					.withFile(file).withPartSize(partSize);
-			svc.uploadPart(uploadRequest).setPartNumber(9999);
+			svc.uploadPart(uploadRequest).setPartNumber(999);
 			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
 
 			filePosition += partSize;

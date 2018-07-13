@@ -1613,7 +1613,7 @@ public class ObjectTest {
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
 					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
 					.withFile(file).withPartSize(partSize);
-			svc.uploadPart(uploadRequest).setPartNumber(9999);
+			svc.uploadPart(uploadRequest).setPartNumber(999);
 			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
 
 			filePosition += partSize;
