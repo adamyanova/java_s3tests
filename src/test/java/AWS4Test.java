@@ -616,7 +616,7 @@ public class AWS4Test {
 
 		String filePath = "./data/file.mpg";
 		utils.createFile(filePath, 23 * 1024 * 1024);
-		
+
 		List<PartETag> partETags = new ArrayList<PartETag>();
 
 		InitiateMultipartUploadRequest initRequest = new InitiateMultipartUploadRequest(bucket_name, key);
@@ -634,7 +634,7 @@ public class AWS4Test {
 					.withFile(file).withPartSize(partSize);
 			svc.uploadPart(uploadRequest).setPartNumber(999);
 			partETags.add((PartETag) svc.uploadPart(uploadRequest).getPartETag());
-
+			
 			filePosition += partSize;
 		}
 

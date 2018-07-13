@@ -1595,7 +1595,6 @@ public class ObjectTest {
 
 		String filePath = "./data/file.mpg";
 		utils.createFile(filePath, 23 * 1024 * 1024);
-		long size = 5 * 1024 * 1024;
 
 		List<PartETag> partETags = new ArrayList<PartETag>();
 
@@ -1604,11 +1603,10 @@ public class ObjectTest {
 
 		File file = new File(filePath);
 		long contentLength = file.length();
-		long partSize = size;
+		long partSize = 5 * 1024 * 1024;
 
 		long filePosition = 1024 * 1024;
 		for (int i = 7; filePosition < contentLength; i++) {
-
 			partSize = Math.min(partSize, (contentLength - filePosition));
 			UploadPartRequest uploadRequest = new UploadPartRequest().withBucketName(bucket_name).withKey(key)
 					.withUploadId(initResponse.getUploadId()).withPartNumber(i).withFileOffset(filePosition)
@@ -1620,7 +1618,7 @@ public class ObjectTest {
 		}
 
 		CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucket_name, key,
-				initResponse.getUploadId(), (List<com.amazonaws.services.s3.model.PartETag>) partETags);
+				initResponse.getUploadId(), (List<PartETag>) partETags);
 
 		try {
 			svc.completeMultipartUpload(compRequest);

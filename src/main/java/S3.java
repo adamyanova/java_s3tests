@@ -316,7 +316,7 @@ public class S3 {
 		}
 
 		CompleteMultipartUploadRequest compRequest = new CompleteMultipartUploadRequest(bucket, key,
-				initResponse.getUploadId(), (List<com.amazonaws.services.s3.model.PartETag>) partETags);
+				initResponse.getUploadId(), (List<PartETag>) partETags);
 
 		return compRequest;
 	}
@@ -357,7 +357,7 @@ public class S3 {
 
 			UploadPartResult resUP = svc.uploadPart(uploadRequest);
 			partETags.add((PartETag) resUP.getPartETag());
-			System.out.printf("RES: Part NUM: %d %n ETag: %s %n", resUP.getPartNumber(), resUP.getETag());
+			System.out.printf("URES: Part NUM: %d %n ETag: %s %n", resUP.getPartNumber(), resUP.getETag());
 
 			filePosition += partSize;
 
@@ -369,6 +369,7 @@ public class S3 {
 					.withPartNumber(partNum++);
 
 			CopyPartResult res = svc.copyPart(copyRequest);
+			System.out.printf("CopyRES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getETag());
 
 			// partETags.add(res.getPartETag());
 			bytePosition += partSize;
