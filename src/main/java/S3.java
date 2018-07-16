@@ -357,7 +357,7 @@ public class S3 {
 
 			// UploadPartResult resUP = svc.uploadPart(uploadRequest);
 			// partETags.add((PartETag) resUP.getPartETag());
-			// System.out.printf("URES: Part NUM: %d %n ETag: %s %n", resUP.getPartNumber(), resUP.getETag());
+			// System.out.printf("% n URES: Part NUM: %d %n ETag: %s %n%n", resUP.getPartNumber(), resUP.getETag());
 
 			// filePosition += partSize;
 
@@ -369,7 +369,7 @@ public class S3 {
 					.withPartNumber(partNum++);
 
 			CopyPartResult res = svc.copyPart(copyRequest);
-			System.out.printf("CopyRES: Part NUM: %d %n ETag: %s %n", res.getPartNumber(), res.getETag());
+			System.out.printf("%nCopyRES: Part NUM: %d %n ETag: %s %n%n", res.getPartNumber(), res.getETag());
 
 			partETags.add(res.getPartETag());
 			bytePosition += partSize;
