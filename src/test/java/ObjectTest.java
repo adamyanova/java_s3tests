@@ -1702,17 +1702,18 @@ public class ObjectTest {
 
 		String src_bkt = utils.getBucketName(prefix);
 		String dst_bkt = utils.getBucketName(prefix);
-		String key = "key1";
+		String src_key = "src-key-0";
+		String dst_key = "dst-key-1";
 
 		svc.createBucket(new CreateBucketRequest(src_bkt));
 		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
 		String filePath = "./data/file.mpg";
 		utils.createFile(filePath, 23 * 1024 * 1024);
-		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
-		CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+		CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
 				5 * 1024 * 1024);
 		System.out.printf("%nCOMPLETE MP COPY %n%n");
 		svc.completeMultipartUpload(resp);
