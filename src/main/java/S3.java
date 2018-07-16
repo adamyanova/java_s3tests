@@ -110,9 +110,9 @@ public class S3 {
 		}
 
 		clientConfig.setClientExecutionTimeout(600 * 1000);
-		clientConfig.setRequestTimeout(10 * 1000);
-		// clientConfig.withConnectionTimeout(600 * 1000);
-		// clientConfig.withSocketTimeout(600 * 1000);
+		// clientConfig.setRequestTimeout(10 * 1000);
+		clientConfig.withConnectionTimeout(600 * 1000);
+		clientConfig.withSocketTimeout(600 * 1000);
 		// Allow as many retries as possible until the client execution timeout expires
 		clientConfig.setMaxErrorRetry(Integer.MAX_VALUE);
 
