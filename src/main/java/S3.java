@@ -330,8 +330,8 @@ public class S3 {
 		InitiateMultipartUploadResult initResult = svc.initiateMultipartUpload(initiateRequest);
 		GetObjectMetadataRequest metadataRequest = new GetObjectMetadataRequest(srcbkt, srckey);
 
-		InitiateMultipartUploadRequest initRequestUP = new InitiateMultipartUploadRequest(srcbkt, "key-2-upl");
-		InitiateMultipartUploadResult initResponseUP = svc.initiateMultipartUpload(initRequestUP);
+		// InitiateMultipartUploadRequest initRequestUP = new InitiateMultipartUploadRequest(srcbkt, "key-2-upl");
+		// InitiateMultipartUploadResult initResponseUP = svc.initiateMultipartUpload(initRequestUP);
 
 		File file = new File("./data/file.mpg");
 		long contentLength = file.length();
