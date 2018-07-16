@@ -1697,59 +1697,59 @@ public class ObjectTest {
 		}
 	}
 
-	@Test(description = "multipart copy for small file using LLAPI, succeeds!")
-	public void testMultipartCopyMultipleSizesLLAPI() {
+	// @Test(description = "multipart copy for small file using LLAPI, succeeds!")
+	// public void testMultipartCopyMultipleSizesLLAPI() {
 
-		String src_bkt = utils.getBucketName(prefix);
-		String dst_bkt = utils.getBucketName(prefix);
-		String src_key = "src-key-0";
-		String dst_key = "dst-key-1";
+	// 	String src_bkt = utils.getBucketName(prefix);
+	// 	String dst_bkt = utils.getBucketName(prefix);
+	// 	String src_key = "src-key-0";
+	// 	String dst_key = "dst-key-1";
 
-		svc.createBucket(new CreateBucketRequest(src_bkt));
-		svc.createBucket(new CreateBucketRequest(dst_bkt));
+	// 	svc.createBucket(new CreateBucketRequest(src_bkt));
+	// 	svc.createBucket(new CreateBucketRequest(dst_bkt));
 
-		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
-		// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
-		// Assert.assertEquals(upl.isDone(), true);
+	// 	String filePath = "./data/file.mpg";
+	// 	utils.createFile(filePath, 23 * 1024 * 1024);
+	// 	// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
+	// 	// Assert.assertEquals(upl.isDone(), true);
 
-		File file = new File(filePath);
-		// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+	// 	File file = new File(filePath);
+	// 	// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 
-		ObjectMetadata metadata = new ObjectMetadata();
-		metadata.setContentLength(file.length());
+	// 	ObjectMetadata metadata = new ObjectMetadata();
+	// 	metadata.setContentLength(file.length());
 
-		try {
-			svc.putObject(new PutObjectRequest(src_bkt, src_key, file));
-		} catch (AmazonServiceException err) {
+	// 	try {
+	// 		svc.putObject(new PutObjectRequest(src_bkt, src_key, file));
+	// 	} catch (AmazonServiceException err) {
 			
-		}
+	// 	}
 
-		CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-				5 * 1024 * 1024);
-		System.out.printf("%nCOMPLETE MP COPY %n%n");
-		svc.completeMultipartUpload(resp);
+	// 	CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
+	// 			5 * 1024 * 1024);
+	// 	System.out.printf("%nCOMPLETE MP COPY %n%n");
+	// 	svc.completeMultipartUpload(resp);
 
-		// CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		5 * 1024 * 1024 + 100 * 1024);
-		// svc.completeMultipartUpload(resp2);
+	// 	// CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+	// 	// 		5 * 1024 * 1024 + 100 * 1024);
+	// 	// svc.completeMultipartUpload(resp2);
 
-		// CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		5 * 1024 * 1024 + 600 * 1024);
-		// svc.completeMultipartUpload(resp3);
+	// 	// CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+	// 	// 		5 * 1024 * 1024 + 600 * 1024);
+	// 	// svc.completeMultipartUpload(resp3);
 
-		// CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		10 * 1024 * 1024 + 100 * 1024);
-		// svc.completeMultipartUpload(resp4);
+	// 	// CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+	// 	// 		10 * 1024 * 1024 + 100 * 1024);
+	// 	// svc.completeMultipartUpload(resp4);
 
-		// CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		10 * 1024 * 1024 + 600 * 1024);
-		// svc.completeMultipartUpload(resp5);
+	// 	// CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+	// 	// 		10 * 1024 * 1024 + 600 * 1024);
+	// 	// svc.completeMultipartUpload(resp5);
 
-		// CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		10 * 1024 * 1024);
-		// svc.completeMultipartUpload(resp6);
-	}
+	// 	// CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+	// 	// 		10 * 1024 * 1024);
+	// 	// svc.completeMultipartUpload(resp6);
+	// }
 
 	@Test(description = "Upload of a  file using HLAPI, succeeds!")
 	public void testUploadFileHLAPIBigFile() {
