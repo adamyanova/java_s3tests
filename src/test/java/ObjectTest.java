@@ -1709,7 +1709,7 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 13 * 1024 * 1024);
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
 		// Assert.assertEquals(upl.isDone(), true);
 
@@ -1730,25 +1730,25 @@ public class ObjectTest {
 		System.out.printf("%nCOMPLETE MP COPY %n%n");
 		svc.completeMultipartUpload(resp);
 
-		// CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		5 * 1024 * 1024 + 100 * 1024);
-		// svc.completeMultipartUpload(resp2);
+		CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
+				5 * 1024 * 1024 + 100 * 1024);
+		svc.completeMultipartUpload(resp2);
 
-		// CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		5 * 1024 * 1024 + 600 * 1024);
-		// svc.completeMultipartUpload(resp3);
+		CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
+				5 * 1024 * 1024 + 600 * 1024);
+		svc.completeMultipartUpload(resp3);
 
-		// CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		10 * 1024 * 1024 + 100 * 1024);
-		// svc.completeMultipartUpload(resp4);
+		CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
+				10 * 1024 * 1024 + 100 * 1024);
+		svc.completeMultipartUpload(resp4);
 
-		// CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		10 * 1024 * 1024 + 600 * 1024);
-		// svc.completeMultipartUpload(resp5);
+		CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
+				10 * 1024 * 1024 + 600 * 1024);
+		svc.completeMultipartUpload(resp5);
 
-		// CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-		// 		10 * 1024 * 1024);
-		// svc.completeMultipartUpload(resp6);
+		CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
+				10 * 1024 * 1024);
+		svc.completeMultipartUpload(resp6);
 	}
 
 	@Test(description = "Upload of a  file using HLAPI, succeeds!")

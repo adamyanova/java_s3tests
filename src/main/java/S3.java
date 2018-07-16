@@ -109,9 +109,9 @@ public class S3 {
 			clientConfig.setProtocol(Protocol.HTTP);
 		}
 
-		clientConfig.withClientExecutionTimeout(120 * 1000);
-		clientConfig.withConnectionTimeout(120 * 000);
-		clientConfig.withSocketTimeout(120 * 000);
+		clientConfig.withClientExecutionTimeout(600 * 1000);
+		clientConfig.withConnectionTimeout(600 * 1000);
+		clientConfig.withSocketTimeout(600 * 1000);
 		clientConfig.withMaxErrorRetry(20);
 
 		System.out.printf("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure);
@@ -233,9 +233,9 @@ public class S3 {
 		} catch (AmazonServiceException e) {
 
 		} catch (SdkClientException e) {
-			if (teradownRetries < 1) {
-				tearDown(svc);
+			if (teradownRetries < 10) {
 				++teradownRetries;
+				tearDown(svc);
 			}
 		}
 	}
@@ -270,7 +270,7 @@ public class S3 {
 		try {
 			rdata = IOUtils.toString(inputStream);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 
 		String arr[] = new String[2];
@@ -333,10 +333,10 @@ public class S3 {
 		// InitiateMultipartUploadRequest initRequestUP = new InitiateMultipartUploadRequest(srcbkt, "key-2-UPL");
 		// InitiateMultipartUploadResult initResponseUP = svc.initiateMultipartUpload(initRequestUP);
 
-		File file = new File("./data/file.mpg");
-		long contentLength = file.length();
+		// File file = new File("./data/file.mpg");
+		// long contentLength = file.length();
 
-		long filePosition = 0;
+		// long filePosition = 0;
 
 
 		ObjectMetadata metadataResult = svc.getObjectMetadata(metadataRequest);
@@ -397,11 +397,11 @@ public class S3 {
 		try {
 			xfer.waitForCompletion();
 		} catch (AmazonServiceException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		} catch (AmazonClientException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 
