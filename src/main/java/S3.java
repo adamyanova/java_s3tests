@@ -109,11 +109,12 @@ public class S3 {
 			clientConfig.setProtocol(Protocol.HTTP);
 		}
 
-		clientConfig.withClientExecutionTimeout(600 * 1000);
-		clientConfig.withConnectionTimeout(600 * 1000);
-		clientConfig.withSocketTimeout(600 * 1000);
+		clientConfig.setClientExecutionTimeout(600 * 1000);
+		clientConfig.setRequestTimeout(10 * 1000);
+		// clientConfig.withConnectionTimeout(600 * 1000);
+		// clientConfig.withSocketTimeout(600 * 1000);
 		// Allow as many retries as possible until the client execution timeout expires
-		clientConfig.withMaxErrorRetry(Integer.MAX_VALUE);
+		clientConfig.setMaxErrorRetry(Integer.MAX_VALUE);
 
 		System.out.printf("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure);
 
