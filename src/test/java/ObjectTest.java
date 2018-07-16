@@ -1710,8 +1710,20 @@ public class ObjectTest {
 
 		String filePath = "./data/file.mpg";
 		utils.createFile(filePath, 23 * 1024 * 1024);
-		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
-		Assert.assertEquals(upl.isDone(), true);
+		// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
+		// Assert.assertEquals(upl.isDone(), true);
+
+		File file = new File(filePath);
+		// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(file.length());
+
+		try {
+			svc.putObject(new PutObjectRequest(src_bkt, src_key, file));
+		} catch (AmazonServiceException err) {
+			
+		}
 
 		CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
 				5 * 1024 * 1024);
