@@ -1,0 +1,75 @@
+
+archive_path: /home/adamyanova/src/teuthology_logs
+email: null
+job_id: '123456'
+last_in_suite: false
+machine_type: smithi
+meta:
+- desc: run s3 tests for Java sdk 
+name: adamyanova-job-1
+nuke-on-error: false 
+interactive-on-error: true 
+os_type: ubuntu 
+overrides:
+  ceph:
+    conf:
+      client:
+        debug rgw: 20
+        rgw crypt require ssl: false 
+        rgw crypt s3 kms encryption keys: testkey-1=YmluCmJvb3N0CmJvb3N0LWJ1aWxkCmNlcGguY29uZgo=
+            testkey-2=aWIKTWFrZWZpbGUKbWFuCm91dApzcmMKVGVzdGluZwo=
+        rgw lc debug interval: 10
+    fs: xfs
+  install:
+    ceph:
+      debuginfo: true
+  openssl_keys:
+    root:
+      client: client.0
+      key-type: rsa:4096
+      cn: teuthology
+      install: [client.0]
+    rgw.client.0:
+      client: client.0
+      ca: root
+      embed-key: true
+  rgw:
+    client.0:
+      ssl certificate: rgw.client.0
+owner: scheduled_adamyanova@teuthology
+roles:
+- - mon.a
+  - mgr.x
+  - osd.0
+  - osd.1
+  - client.0
+#- - mon.b
+#  - mgr.y
+#  - osd.2
+#  - client.1
+branch: master 
+repo: https://github.com/ceph/ceph.git
+suite_branch: wip-s3java-suite
+suite_path: /home/adamyanova/src/github.com_adamyanova_ceph_wip-s3java-suite/qa
+#suite_branch: wip-s3tests-go
+#suite_path: /home/adamyanova/src/github.com_adamyanova_ceph_wip-s3tests-go/qa
+suite_repo: https://github.com/adamyanova/ceph.git
+#s3tests_repo: https://github.com/adamyanova/go_s3tests-1.git
+#s3tests_branch: master
+tasks:
+- install: null
+- ceph:
+- openssl_keys:
+- rgw: 
+    client.0:
+#- s3tests_go:
+- s3tests_java:
+    client.0:
+      branch: wip 
+      repo: 'https://github.com/adamyanova/java_s3tests.git'
+#      extra_args: ['--tests', 'ObjectTest.testMultipartCopyMultipleSizesLLAPI']
+#      debug:
+      log_fwd: ../s3tests_log_ubuntu.txt
+teuthology_branch: master
+tube: smithi 
+verbose: true
