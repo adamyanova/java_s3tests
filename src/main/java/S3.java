@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +40,9 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.amazonaws.services.s3.S3ResponseMetadata;
 import com.amazonaws.services.s3.model.S3VersionSummary;
 import com.amazonaws.services.s3.model.SSECustomerKey;
 import com.amazonaws.services.s3.model.UploadPartRequest;
-import com.amazonaws.services.s3.model.UploadPartResult;
 import com.amazonaws.services.s3.model.VersionListing;
 import com.amazonaws.services.s3.transfer.Copy;
 import com.amazonaws.services.s3.transfer.Download;
@@ -56,7 +53,6 @@ import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.IOUtils;
-import com.google.common.io.BaseEncoding;
 
 public class S3 {
 	private static S3 instance = null;
@@ -326,7 +322,7 @@ public class S3 {
 	public CompleteMultipartUploadRequest multipartCopyLLAPI(AmazonS3 svc, String dstbkt, String dstkey, String srcbkt,
 			String srckey, long size) {
 
-		List<CopyPartResult> copyResponses = new ArrayList<CopyPartResult>();
+		// List<CopyPartResult> copyResponses = new ArrayList<CopyPartResult>();
 
 		InitiateMultipartUploadRequest initiateRequest = new InitiateMultipartUploadRequest(dstbkt, dstkey);
 		InitiateMultipartUploadResult initResult = svc.initiateMultipartUpload(initiateRequest);
@@ -371,13 +367,10 @@ public class S3 {
 					.withPartNumber(partNum++);
 
 			CopyPartResult res = svc.copyPart(copyRequest);
-			System.out.printf("%nCopyRES: Part NUM: %d %n ETag: %s %n%n", res.getPartNumber(), res.getETag());
+			// System.out.printf("%nCopyRES: Part NUM: %d %n ETag: %s %n%n", res.getPartNumber(), res.getETag());
 
 			partETags.add(res.getPartETag());
 			bytePosition += partSize;
-		}
-		for (PartETag p : partETags) {
-			System.out.printf("Part NUM: %d %n ETag: %s %n", p.getPartNumber(), p.getETag());
 		}
 		CompleteMultipartUploadRequest completeRequest = new CompleteMultipartUploadRequest(dstbkt, dstkey,
 				initResult.getUploadId(), partETags);
@@ -389,9 +382,7 @@ public class S3 {
 		List<PartETag> etags = new ArrayList<PartETag>();
 		for (CopyPartResult response : responses) {
 			etags.add(new PartETag(response.getPartNumber(), response.getETag()));
-			System.out.printf("Part NUM: %d %n ETag: %s %n", response.getPartNumber(), response.getETag());
 		}
-		System.out.printf("ETAGS: %n %s %n", etags.toString());
 		return etags;
 	}
 
