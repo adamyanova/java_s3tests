@@ -720,6 +720,10 @@ public class AWS4Test {
 
 	}
 
+	// The MultipartCopy test with LL API are commented out due to differences observed 
+	// in the HTTP response of the CopyPart request when running on master and mimic branches
+	// of Ceph
+
 	// @Test(description = "multipart copy for small file using LLAPI, succeeds!")
 	// public void testMultipartCopyMultipleSizesLLAPIAWS4() {
 
