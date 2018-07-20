@@ -13,17 +13,3 @@ s3main :
 
   s3dir : folder
   dir : ../data
-
-# s3alt :
-#     access_key : NOPQRSTUVWXYZABCDEFG
-#     access_secret : nopqrstuvwxyzabcdefghijklmnabcdefghijklm
-#     bucket : bucket1
-#     region : mexico
-#     display_name :
-#     email : 
-#     SSE : AES256
-#     kmskeyid : barbican_key_id
-#     is_secure : false
-
-#     s3dir : folder
-#     dir : '../data'
