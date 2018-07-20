@@ -1,37 +1,15 @@
-#fixtures
+bucket_prefix : joannah
 
-bucket_prefix = joannah
+s3main : 
+  access_key : 0555b35654ad1656d804
+  access_secret : h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
+  region : mexico 
+  endpoint : localhost:8000/
+  port : 8000
+  display_name : Mr. Tester
+  email : tester@test.com
+  is_secure : false
+  SSE : AES256
 
-[s3main]
-
-access_key = 0555b35654ad1656d804
-access_secret = h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
-region = mexico
-endpoint = http://localhost:8000/
-port = 8000
-display_name = somename
-email = someone@gmail.com
-is_secure = false
-SSE = AES256
-kmskeyid = barbican_key_id
-
-
-s3dir = folder
-dir = "../data"
-
-[s3alt]
-
-access_key = 0555b35654ad1656d804
-access_secret = h7GhxuBLTrlhVUyxSPUKUV8r/2EI4ngqJxD7iBdBYLhwluN30JaT3Q==
-region = mexico
-endpoint = http://localhost:8000/
-port = 8000
-display_name = somename
-email = someone@gmail.com
-is_secure = false
-SSE = AES256
-kmskeyid = barbican_key_id
-
-
-s3dir = folder
-dir = "../data"
+  s3dir : folder
+  dir : ../data
