@@ -66,6 +66,7 @@ public class AWS4Test {
 
 	@BeforeMethod
 	public void setUp() throws Exception {
+		System.out.printf("Cleanup Before");
 		utils.tearDown(svc);
 	}
 
