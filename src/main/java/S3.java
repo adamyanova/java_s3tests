@@ -109,7 +109,7 @@ public class S3 {
 		clientConfig.setRequestTimeout(20 * 1000);
 		clientConfig.withConnectionTimeout(800 * 1000);
 		clientConfig.withSocketTimeout(800 * 1000);
-		// Allow as many retries as possible until the client execution timeout expires
+		// Allow as many retries as possible until the client executiaon timeout expires
 		clientConfig.setMaxErrorRetry(Integer.MAX_VALUE);
 
 		System.out.printf("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure);
