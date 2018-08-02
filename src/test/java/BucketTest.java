@@ -18,6 +18,7 @@ public class BucketTest {
 
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
+		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
