@@ -105,10 +105,11 @@ public class S3 {
 			clientConfig.setProtocol(Protocol.HTTP);
 		}
 
-		clientConfig.setClientExecutionTimeout(600 * 1000);
-		clientConfig.setRequestTimeout(20 * 1000);
-		clientConfig.withConnectionTimeout(800 * 1000);
-		clientConfig.withSocketTimeout(800 * 1000);
+		clientConfig.setClientExecutionTimeout(900 * 1000);
+		clientConfig.setRequestTimeout(60 * 1000);
+		clientConfig.withConnectionTimeout(900 * 1000);
+		clientConfig.withSocketTimeout(900 * 1000);
+		clientConfig.withConnectionMaxIdleMillis(1 * 1000);
 		// Allow as many retries as possible until the client executiaon timeout expires
 		clientConfig.setMaxErrorRetry(Integer.MAX_VALUE);
 
@@ -406,8 +407,7 @@ public class S3 {
 	}
 
 	public Upload UploadFileHLAPI(AmazonS3 svc, String bucket, String key, String filePath) {
-		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc)
-				.withMultipartCopyPartSize(10 * 1024 * 1204l).build();
+		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc).build();
 		Upload upload = tm.upload(bucket, key, new File(filePath));
 		try {
 			waitForCompletion(upload);
