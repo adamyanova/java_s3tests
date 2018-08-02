@@ -106,9 +106,9 @@ public class S3 {
 		}
 
 		clientConfig.setClientExecutionTimeout(600 * 1000);
-		// clientConfig.setRequestTimeout(10 * 1000);
-		clientConfig.withConnectionTimeout(600 * 1000);
-		clientConfig.withSocketTimeout(600 * 1000);
+		clientConfig.setRequestTimeout(20 * 1000);
+		clientConfig.withConnectionTimeout(800 * 1000);
+		clientConfig.withSocketTimeout(800 * 1000);
 		// Allow as many retries as possible until the client execution timeout expires
 		clientConfig.setMaxErrorRetry(Integer.MAX_VALUE);
 
@@ -289,8 +289,8 @@ public class S3 {
 		return bucket;
 	}
 
-	public CompleteMultipartUploadRequest multipartUploadLLAPI(AmazonS3 svc, String bucket, String key,
-			long size, String filePath) {
+	public CompleteMultipartUploadRequest multipartUploadLLAPI(AmazonS3 svc, String bucket, String key, long size,
+			String filePath) {
 
 		List<PartETag> partETags = new ArrayList<PartETag>();
 
@@ -339,8 +339,7 @@ public class S3 {
 			long lastByte = Math.min(bytePosition + partSize - 1, objectSize - 1);
 			CopyPartRequest copyRequest = new CopyPartRequest().withDestinationBucketName(dstbkt)
 					.withDestinationKey(dstkey).withSourceBucketName(srcbkt).withSourceKey(srckey)
-					.withUploadId(initResult.getUploadId()).withFirstByte(bytePosition)
-					.withLastByte(lastByte)
+					.withUploadId(initResult.getUploadId()).withFirstByte(bytePosition).withLastByte(lastByte)
 					.withPartNumber(partNum++);
 
 			CopyPartResult res = svc.copyPart(copyRequest);
@@ -407,7 +406,8 @@ public class S3 {
 	}
 
 	public Upload UploadFileHLAPI(AmazonS3 svc, String bucket, String key, String filePath) {
-		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc).build();
+		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc)
+				.withMultipartCopyPartSize(10 * 1024 * 1204l).build();
 		Upload upload = tm.upload(bucket, key, new File(filePath));
 		try {
 			waitForCompletion(upload);

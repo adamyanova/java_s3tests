@@ -775,7 +775,7 @@ public class AWS4Test {
 
 	// }
 
-	@Test(description = "Upload of a  file using HLAPI, succeeds!")
+	@Test(description = "Upload of a file using HLAPI, succeeds!")
 	public void testUploadFileHLAPIBigFileAWS4() {
 
 		String bucket_name = utils.getBucketName(prefix);
