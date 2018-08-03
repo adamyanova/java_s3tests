@@ -2,6 +2,7 @@
  ## S3 compatibility tests
 
 This is a set of integration tests for the S3 (AWS) interface of RGW. 
+
 It might also be useful for people implementing software
 that exposes an S3-like API.
 
@@ -9,7 +10,7 @@ The tests only cover the REST interface.
 
 ### Setup
 
-The tests use the [AWS Java SDK]() and  TestNG framework.
+The tests use the [AWS Java SDK](https://aws.amazon.com/sdk-for-java/) and  TestNG framework.
 
 ### Get the source code
 
@@ -45,13 +46,13 @@ The credentials match the default S3 test user created by RGW.
 
 The tests connect to the Ceph RGW, therefore one shoud start RGW beforehand and use the provided credentials. Details on building Ceph and starting RGW can be found in the [ceph repository](https://github.com/ceph/ceph).
 
-The s3tests.teuth.config.yaml files is required for the Ceph test framework Teuthology. 
+The **s3tests.teuth.config.yaml** files is required for the Ceph test framework Teuthology. 
 It is irrelevant for standalone testing.
 
 
 ### Install prerequisits
-The boostrap.sh script will install openjdk-8-jdk/java-1.8.0-openjdk, wget, unzip and gradle-4.7. 
-The default gradle intsall path is /opt/gradle. One can specify a custom location by passing it as an argument to the bootstrap.sh script
+The **boostrap.sh** script will install **openjdk-8-jdk/java-1.8.0-openjdk, wget, unzip and gradle-4.7**. 
+The default gradle intsall path is **/opt/gradle**. One can specify a custom location by passing it as an argument to the bootstrap.sh script
 
 	./bootstrap.sh --path=/path/to/install/gradle
 
@@ -74,4 +75,8 @@ For a specific test in one of the subesets e.g. testMultipartUploadMultipleSizes
 
 ### Debug output
 It is possible to enable info/debug output from the tests as well as from the AWS API and the HTTP client. 
-Edit the 'java_s3tests/src/main/resources/log4j.properties' file in order to change the log levels.
+Edit the file 
+
+	java_s3tests/src/main/resources/log4j.properties
+
+in order to change the log levels.
