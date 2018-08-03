@@ -234,7 +234,7 @@ public class S3 {
 					} catch (AmazonServiceException e) {
 
 					} catch (SdkClientException e) {
-
+ 
 					}
 				}
 			}
