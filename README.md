@@ -1,16 +1,12 @@
 
  ## S3 compatibility tests
 
-This is a set of integration tests for the S3 (AWS) interface of RGW. 
+This is a set of integration tests for the S3 (AWS) interface of [RGW](http://docs.ceph.com/docs/mimic/radosgw/). 
 
 It might also be useful for people implementing software
 that exposes an S3-like API.
 
-The tests only cover the REST interface.
-
-### Setup
-
-The tests use the [AWS Java SDK](https://aws.amazon.com/sdk-for-java/) and  TestNG framework.
+The test suite only covers the REST interface and uses [AWS Java SDK ](https://aws.amazon.com/sdk-for-java/) version 1.11.364 and [TestNG framework](https://testng.org/).
 
 ### Get the source code
 
@@ -46,7 +42,7 @@ The credentials match the default S3 test user created by RGW.
 
 The tests connect to the Ceph RGW, therefore one shoud start RGW beforehand and use the provided credentials. Details on building Ceph and starting RGW can be found in the [ceph repository](https://github.com/ceph/ceph).
 
-The **s3tests.teuth.config.yaml** files is required for the Ceph test framework Teuthology. 
+The **s3tests.teuth.config.yaml** files is required for the Ceph test framework [Teuthology](http://docs.ceph.com/teuthology/docs/README.html). 
 It is irrelevant for standalone testing.
 
 
