@@ -1,8 +1,8 @@
 
  ## S3 compatibility tests
 
-This is a set of completely unofficial Amazon AWS S3 compatibility
-tests, that will hopefully be useful to people implementing software
+This is a set of integration tests for the S3 (AWS) interface of RGW. 
+It might also be useful for people implementing software
 that exposes an S3-like API.
 
 The tests only cover the REST interface.
@@ -15,16 +15,16 @@ The tests use the [AWS Java SDK]() and  TestNG framework.
 
 Clone the repository
 
-	git clone https://github.com/nanjekyejoannah/java_s3tests
-	cd java_s3tests
+	git clone https://github.com/adamyanova/java_s3tests
 
 ### Edit Configuration
 
+	cd java_s3tests
 	cp config.properties.sample config.properties
 
 The configuration file looks something like this:
 
-	bucket_prefix = joannah
+	bucket_prefix = test-
 	
 	[s3main]
 	
@@ -39,28 +39,39 @@ The configuration file looks something like this:
 	SSE = AES256
 	kmskeyid = barbican_key_id
 
-### RGW
+The credentials match the default S3 test user created by RGW.
 
-The tests connect to the Ceph RGW ,therefore you shoud have started your RGW and use the credentials you get. Details on building Ceph and starting RGW can be found in the [ceph repository](https://github.com/ceph/ceph).
+#### RGW
+
+The tests connect to the Ceph RGW, therefore one shoud start RGW beforehand and use the provided credentials. Details on building Ceph and starting RGW can be found in the [ceph repository](https://github.com/ceph/ceph).
+
+The s3tests.teuth.config.yaml files is required for the Ceph test framework Teuthology. 
+It is irrelevant for standalone testing.
 
 
-### 0. Install Grandle
-	
-Ubuntu
+### Install prerequisits
+The boostrap.sh script will install openjdk-8-jdk/java-1.8.0-openjdk, wget, unzip and gradle-4.7. 
+The default gradle intsall path is /opt/gradle. One can specify a custom location by passing it as an argument to the bootstrap.sh script
 
-	sudo apt-get update
-	sudo apt-get install gradle
+	./bootstrap.sh --path=/path/to/install/gradle
 
-Fedora
-	
-	dnf update
-	dnf install gradle
-	
-#### 1. Build 
-
-	gradle build
-
-#### 2. Run the Tests
+### Run the Tests
+Run all tests with:
 
 	gradle clean test
 
+For more options check 
+
+	gradle --help
+
+There are three subsetests of tests: AWS4Test, BucketTest and ObjectTest. To run only one subset e.g. AWS4Test use:
+	
+	gradle clean test --tests AWS4Test
+
+For a specific test in one of the subesets e.g. testMultipartUploadMultipleSizesLLAPIAWS4() from AWS4Test do:
+
+	gradle clean test --tests AWS4Test.testMultipartUploadMultipleSizesLLAPIAWS4
+
+### Debug output
+It is possible to enable info/debug output from the tests as well as from the AWS API and the HTTP client. 
+Edit the 'java_s3tests/src/main/resources/log4j.properties' file in order to change the log levels.

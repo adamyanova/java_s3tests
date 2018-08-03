@@ -1,4 +1,4 @@
-bucket_prefix : joannah
+bucket_prefix : test-
 
 s3main : 
   access_key : 

@@ -2,7 +2,26 @@
 
 set -e
 
-echo "S3 Tests Java running .bootstrap.sh " 1>&2
+GRADLEPATH=""
+
+# Read command line arguments
+for i in "$@"
+do
+case $i in
+    -p=*|--path=*)
+    GRADLEPATH="${i#*=}"
+    shift # past argument=value
+    ;;
+    -h*|--help*)
+    echo " -h / --help  : print this menu"
+    echo " -p=\"custom/path\" / --path=\"custom/path\"  : set custom install path for gradle; default is /opt/gradle"
+    exit
+    ;;
+    *)
+          # unknown option
+    ;;
+esac
+done
 
 # Install Java
 
@@ -40,15 +59,24 @@ elif [ -f /etc/redhat-release ]; then
 fi
 
 # Download and install Gradle
+
+if [ -z "$GRADLEPATH" ]; then 
+    GRADLEPATH="/opt/gradle"
+fi
+
+echo " Gradle will be installed under $GRADLEPATH"
+
+# The version is hardcoded on purpose in order to match the 
+# one used for testing in the Ceph test framework Teuthology
 version=4.7
 
 if [ ! -d /opt/gradle ]; then
-    sudo mkdir /opt/gradle
+    sudo mkdir ${GRADLEPATH}
 fi
 wget https://services.gradle.org/distributions/gradle-$version-bin.zip
-sudo unzip -o -d /opt/gradle gradle-$version-bin.zip
+sudo unzip -o -d ${GRADLEPATH} gradle-$version-bin.zip
 rm -rf gradle-$version-bin.zip*
-export PATH=/opt/gradle/gradle-$version/bin:$PATH
-gradle -v
 
-echo "S3 Tests Java END of running .bootstrap " 1>&2
+echo "export PATH=${GRADLEPATH}/gradle-$version/bin:$PATH"
+export PATH=${GRADLEPATH}/gradle-$version/bin:$PATH
+gradle -v
