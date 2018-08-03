@@ -54,18 +54,21 @@ public class AWS4Test {
 
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
+		S3.logger.debug("TeardownAfterClass");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
 	@AfterMethod
 	public void tearDownAfterMethod() throws Exception {
+		S3.logger.debug("TeardownAfterMethod");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
 	@BeforeMethod
 	public void setUp() throws Exception {
+		S3.logger.debug("TeardownBeforeMethod");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
@@ -646,7 +649,6 @@ public class AWS4Test {
 		try {
 			svc.completeMultipartUpload(compRequest);
 		} catch (AmazonServiceException err) {
-			System.out.printf(" %n%n%n COMPLETED MP UPLOAD: INVALID PART  %n%n%n");
 			AssertJUnit.assertEquals(err.getErrorCode(), "InvalidPart");
 		}
 	}
@@ -1051,12 +1053,9 @@ public class AWS4Test {
 
 		long MB = 2 * 1024 * 1024;
 		TransferProgress progress = myDownload.getProgress();
-		System.out.printf("Bytes to transfer: %s %n", progress.getTotalBytesToTransfer());
 		while (progress.getBytesTransferred() < MB) {
-			System.out.printf("Downloaded so far: %s %n", progress.getBytesTransferred());
 			Thread.sleep(2000);
 		}
-		System.out.printf("Downloaded so far: %s %n", progress.getBytesTransferred());
 
 		if (progress.getBytesTransferred() < progress.getTotalBytesToTransfer()) {
 			// Pause the download and create file to store download info

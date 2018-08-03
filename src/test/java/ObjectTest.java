@@ -66,18 +66,21 @@ public class ObjectTest {
 
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
+		S3.logger.debug("TeardownAfterClass");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
 	@AfterMethod
 	public void tearDownAfterMethod() throws Exception {
+		S3.logger.debug("TeardownAfterMethod");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
 	@BeforeMethod
 	public void setUp() throws Exception {
+		S3.logger.debug("TeardownBeforeMethod");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
@@ -652,7 +655,7 @@ public class ObjectTest {
 			String arr[] = utils.EncryptionSseCustomerWrite(svc, 1);
 			Assert.assertEquals(arr[0], arr[1]);
 		} catch (IllegalArgumentException err) {
-			// System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			String expected_error = "HTTPS must be used when sending customer encryption keys (SSE-C) to S3, in order to protect your encryption keys.";
 			AssertJUnit.assertEquals(err.getMessage(), expected_error);
 		}
@@ -665,7 +668,7 @@ public class ObjectTest {
 			String arr[] = utils.EncryptionSseCustomerWrite(svc, 1024);
 			Assert.assertEquals(arr[0], arr[1]);
 		} catch (IllegalArgumentException err) {
-			// System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			String expected_error = "HTTPS must be used when sending customer encryption keys (SSE-C) to S3, in order to protect your encryption keys.";
 			AssertJUnit.assertEquals(err.getMessage(), expected_error);
 		}
@@ -678,7 +681,7 @@ public class ObjectTest {
 			String arr[] = utils.EncryptionSseCustomerWrite(svc, 1024 * 1024);
 			Assert.assertEquals(arr[0], arr[1]);
 		} catch (IllegalArgumentException err) {
-			// System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			String expected_error = "HTTPS must be used when sending customer encryption keys (SSE-C) to S3, in order to protect your encryption keys.";
 			AssertJUnit.assertEquals(err.getMessage(), expected_error);
 		}
@@ -721,7 +724,7 @@ public class ObjectTest {
 			}
 			Assert.assertEquals(rdata, data);
 		} catch (IllegalArgumentException err) {
-			// System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			AssertJUnit.assertEquals(err.getMessage(),
 					"HTTPS must be used when sending customer encryption keys (SSE-C) to S3, in order to protect your encryption keys.");
 		}
@@ -830,7 +833,7 @@ public class ObjectTest {
 			String rdata = svc.getObjectAsString(bucket_name, key);
 			Assert.assertEquals(rdata, data);
 		} catch (AmazonServiceException err) {
-			System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			AssertJUnit.assertEquals(err.getErrorCode(), "XAmzContentSHA256Mismatch");
 		}
 	}
@@ -857,7 +860,7 @@ public class ObjectTest {
 				AssertJUnit.assertEquals(err.getErrorCode().isEmpty(), false);
 			}
 		} catch (AmazonServiceException err) {
-			// System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			AssertJUnit.assertEquals(err.getErrorCode(), "InvalidAccessKeyId");
 		}
 	}
@@ -879,7 +882,7 @@ public class ObjectTest {
 			PutObjectRequest putRequest = new PutObjectRequest(bucket_name, key, datastream, objectMetadata);
 			svc.putObject(putRequest);
 		} catch (AmazonServiceException err) {
-			// System.out.printf("TEST ERROR: %s%n", err.getMessage());
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			AssertJUnit.assertEquals(err.getErrorMessage(),
 					"Server Side Encryption with KMS managed key requires HTTP header x-amz-server-side-encryption : aws:kms");
 		}
@@ -1625,9 +1628,8 @@ public class ObjectTest {
 
 		try {
 			svc.completeMultipartUpload(compRequest);
-			System.out.printf(" %n%n%n COMPLETED MP UPLOAD  %n%n%n");
 		} catch (AmazonServiceException err) {
-			System.out.printf(" %n%n%n COMPLETED MP UPLOAD: INVALID PART  %n%n%n");
+			S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
 			AssertJUnit.assertEquals(err.getErrorCode(), "InvalidPart");
 		}
 	}
@@ -1698,62 +1700,70 @@ public class ObjectTest {
 		}
 	}
 
-	// The MultipartCopy test with LL API are commented out due to differences observed 
-	// in the HTTP response of the CopyPart request when running on master and mimic branches
+	// The MultipartCopy test with LL API are commented out due to differences
+	// observed
+	// in the HTTP response of the CopyPart request when running on master and mimic
+	// branches
 	// of Ceph
-	
+
 	// @Test(description = "multipart copy for small file using LLAPI, succeeds!")
 	// public void testMultipartCopyMultipleSizesLLAPI() {
 
-	// 	String src_bkt = utils.getBucketName(prefix);
-	// 	String dst_bkt = utils.getBucketName(prefix);
-	// 	String src_key = "src-key-0";
-	// 	String dst_key = "dst-key-1";
+	// String src_bkt = utils.getBucketName(prefix);
+	// String dst_bkt = utils.getBucketName(prefix);
+	// String src_key = "src-key-0";
+	// String dst_key = "dst-key-1";
 
-	// 	svc.createBucket(new CreateBucketRequest(src_bkt));
-	// 	svc.createBucket(new CreateBucketRequest(dst_bkt));
+	// svc.createBucket(new CreateBucketRequest(src_bkt));
+	// svc.createBucket(new CreateBucketRequest(dst_bkt));
 
-	// 	String filePath = "./data/file.mpg";
-	// 	utils.createFile(filePath, 23 * 1024 * 1024);
-	// 	// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
-	// 	// Assert.assertEquals(upl.isDone(), true);
+	// String filePath = "./data/file.mpg";
+	// utils.createFile(filePath, 23 * 1024 * 1024);
+	// // Upload upl = utils.UploadFileHLAPI(svc, src_bkt, src_key, filePath);
+	// // Assert.assertEquals(upl.isDone(), true);
 
-	// 	File file = new File(filePath);
-	// 	// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+	// File file = new File(filePath);
+	// // Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 
-	// 	ObjectMetadata metadata = new ObjectMetadata();
-	// 	metadata.setContentLength(file.length());
+	// ObjectMetadata metadata = new ObjectMetadata();
+	// metadata.setContentLength(file.length());
 
-	// 	try {
-	// 		svc.putObject(new PutObjectRequest(src_bkt, src_key, file));
-	// 	} catch (AmazonServiceException err) {
-			
-	// 	}
+	// try {
+	// svc.putObject(new PutObjectRequest(src_bkt, src_key, file));
+	// } catch (AmazonServiceException err) {
 
-	// 	CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-	// 			5 * 1024 * 1024);
-	// 	System.out.printf("%nCOMPLETE MP COPY %n%n");
-	// 	svc.completeMultipartUpload(resp);
+	// }
 
-	// 	CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-	// 			5 * 1024 * 1024 + 100 * 1024);
-	// 	svc.completeMultipartUpload(resp2);
+	// CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt,
+	// dst_key, src_bkt, src_key,
+	// 5 * 1024 * 1024);
+	// S3.logger.debug(String.format("TEST ERROR: %s%n", err.getMessage()));
+	// svc.completeMultipartUpload(resp);
 
-	// 	CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-	// 			5 * 1024 * 1024 + 600 * 1024);
-	// 	svc.completeMultipartUpload(resp3);
+	// CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt,
+	// dst_key, src_bkt, src_key,
+	// 5 * 1024 * 1024 + 100 * 1024);
+	// svc.completeMultipartUpload(resp2);
 
-	// 	CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-	// 			10 * 1024 * 1024 + 100 * 1024);
-	// 	svc.completeMultipartUpload(resp4);
+	// CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt,
+	// dst_key, src_bkt, src_key,
+	// 5 * 1024 * 1024 + 600 * 1024);
+	// svc.completeMultipartUpload(resp3);
 
-	// 	CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-	// 			10 * 1024 * 1024 + 600 * 1024);
-	// 	svc.completeMultipartUpload(resp5);
+	// CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt,
+	// dst_key, src_bkt, src_key,
+	// 10 * 1024 * 1024 + 100 * 1024);
+	// svc.completeMultipartUpload(resp4);
 
-	// 	CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, dst_key, src_bkt, src_key,
-	// 			10 * 1024 * 1024);
-	// 	svc.completeMultipartUpload(resp6);
+	// CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt,
+	// dst_key, src_bkt, src_key,
+	// 10 * 1024 * 1024 + 600 * 1024);
+	// svc.completeMultipartUpload(resp5);
+
+	// CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt,
+	// dst_key, src_bkt, src_key,
+	// 10 * 1024 * 1024);
+	// svc.completeMultipartUpload(resp6);
 	// }
 
 	@Test(description = "Upload of a  file using HLAPI, succeeds!")
@@ -2024,11 +2034,11 @@ public class ObjectTest {
 		TransferProgress progress = myDownload.getProgress();
 		while (progress.getBytesTransferred() < MB) {
 			Thread.sleep(200);
-			System.out.printf("Downloaded so far: %d / %d %n", progress.getBytesTransferred(),
-					progress.getTotalBytesToTransfer());
+			S3.logger.debug(String.format("Downloaded so far: %d / %d %n", progress.getBytesTransferred(),
+					progress.getTotalBytesToTransfer()));
 		}
-		System.out.printf("Downloaded so far: %d / %d %n", progress.getBytesTransferred(),
-				progress.getTotalBytesToTransfer());
+		S3.logger.debug(String.format("Downloaded so far: %d / %d %n", progress.getBytesTransferred(),
+				progress.getTotalBytesToTransfer()));
 		Thread.sleep(200);
 		if (progress.getBytesTransferred() < progress.getTotalBytesToTransfer()) {
 			// Pause the download and create file to store download info

@@ -18,18 +18,21 @@ public class BucketTest {
 
 	@AfterClass
 	public void tearDownAfterClass() throws Exception {
+		S3.logger.debug("TeardownAfterClass");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
 	@AfterMethod
 	public void tearDownAfterMethod() throws Exception {
+		S3.logger.debug("TeardownAfterMethod");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}
 
 	@BeforeMethod
 	public void setUp() throws Exception {
+		S3.logger.debug("TeardownBeforeMethod");
 		utils.teradownRetries = 0;
 		utils.tearDown(svc);
 	}

@@ -12,6 +12,9 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.LogManager;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
@@ -55,6 +58,9 @@ import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonaws.util.IOUtils;
 
 public class S3 {
+
+	final static Logger logger = LogManager.getRootLogger();
+
 	private static S3 instance = null;
 
 	protected S3() {
@@ -113,7 +119,7 @@ public class S3 {
 		// Allow as many retries as possible until the client executiaon timeout expires
 		clientConfig.setMaxErrorRetry(Integer.MAX_VALUE);
 
-		System.out.printf("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure);
+		logger.info(String.format("EP is_secure: %s - %b %n", prop.getProperty("endpoint"), issecure));
 
 		AmazonS3 s3client = AmazonS3ClientBuilder.standard().withCredentials(credentials)
 				.withEndpointConfiguration(epConfig).withClientConfiguration(clientConfig).enablePathStyleAccess()
@@ -170,9 +176,9 @@ public class S3 {
 			}
 		}
 		try {
-			System.out.printf("TEARDOWN %n");
+			logger.info("TEARDOWN");
 			List<Bucket> buckets = svc.listBuckets(new ListBucketsRequest());
-			System.out.printf("Buckets list size: %d %n", buckets.size());
+			logger.info(String.format("Buckets list size: %d ", buckets.size()));
 			String prefix = getPrefix();
 
 			for (Bucket b : buckets) {
@@ -184,6 +190,8 @@ public class S3 {
 						for (java.util.Iterator<S3VersionSummary> iterator = version_listing.getVersionSummaries()
 								.iterator(); iterator.hasNext();) {
 							S3VersionSummary vs = (S3VersionSummary) iterator.next();
+							logger.info(String.format("Deleting bucket/object/version: %s / %s / %s", bucket_name,
+									vs.getKey(), vs.getVersionId()));
 							try {
 								svc.deleteVersion(bucket_name, vs.getKey(), vs.getVersionId());
 							} catch (AmazonServiceException e) {
@@ -204,7 +212,8 @@ public class S3 {
 						for (java.util.Iterator<S3ObjectSummary> iterator = object_listing.getObjectSummaries()
 								.iterator(); iterator.hasNext();) {
 							S3ObjectSummary summary = (S3ObjectSummary) iterator.next();
-							System.out.printf("Deleting bucket/object: %s / %s %n", bucket_name, summary.getKey());
+							logger.info(
+									String.format("Deleting bucket/object: %s / %s", bucket_name, summary.getKey()));
 							try {
 								svc.deleteObject(bucket_name, summary.getKey());
 							} catch (AmazonServiceException e) {
@@ -221,7 +230,7 @@ public class S3 {
 					}
 					try {
 						svc.deleteBucket(new DeleteBucketRequest(b.getName()));
-						System.out.printf("Deleted bucket: %s  %n", bucket_name);
+						logger.info(String.format("Deleted bucket: %s", bucket_name));
 					} catch (AmazonServiceException e) {
 
 					} catch (SdkClientException e) {
