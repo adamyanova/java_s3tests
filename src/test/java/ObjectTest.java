@@ -1806,6 +1806,8 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String dir = "./data";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 
 		Transfer upl = utils.multipartUploadHLAPI(svc, bucket_name, null, dir);
 
@@ -1819,6 +1821,8 @@ public class ObjectTest {
 		String bucket_name = utils.getBucketName(prefix);
 
 		String dir = "./data";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 
 		try {
 			utils.multipartUploadHLAPI(svc, bucket_name, null, dir);
@@ -1880,8 +1884,8 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(src_bkt));
 		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
-		String filePath = "./data/sample.txt";
-		utils.createFile(filePath, 256 * 1024);
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
@@ -1899,8 +1903,8 @@ public class ObjectTest {
 
 		svc.createBucket(new CreateBucketRequest(src_bkt));
 
-		String filePath = "./data/sample.txt";
-		utils.createFile(filePath, 256 * 1024);
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 

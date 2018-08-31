@@ -603,7 +603,7 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
+		utils.createFile(filePath, 13 * 1024 * 1024);
 		long size = 5 * 1024 * 1024;
 
 		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, size, filePath);
@@ -819,6 +819,8 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String dir = "./data";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 
 		Transfer upl = utils.multipartUploadHLAPI(svc, bucket_name, null, dir);
 
@@ -833,6 +835,8 @@ public class AWS4Test {
 		String bucket_name = utils.getBucketName(prefix);
 
 		String dir = "./data";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 
 		try {
 			utils.multipartUploadHLAPI(svc, bucket_name, null, dir);
@@ -900,7 +904,8 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(src_bkt));
 		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
-		String filePath = "./data/sample.txt";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
@@ -918,7 +923,8 @@ public class AWS4Test {
 
 		svc.createBucket(new CreateBucketRequest(src_bkt));
 
-		String filePath = "./data/sample.txt";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
@@ -971,7 +977,8 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 		String key = "key1";
 
-		String filePath = "./data/sample.txt";
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
 		Upload upl = utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
 		Assert.assertEquals(upl.isDone(), true);
 
