@@ -568,7 +568,7 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
+		utils.createFile(filePath, 53 * 1024 * 1024);
 
 		CompleteMultipartUploadRequest resp = utils.multipartUploadLLAPI(svc, bucket_name, key, 
 				5 * 1024 * 1024, filePath);
