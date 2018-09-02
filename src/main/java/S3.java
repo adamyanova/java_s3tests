@@ -417,7 +417,7 @@ public class S3 {
 
 	public Upload UploadFileHLAPI(AmazonS3 svc, String bucket, String key, String filePath) {
 		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc)
-				.withMinimumUploadPartSize(10 * 1024 * 1024l).build();
+				.withMultipartUploadThreshold(100 * 1024 * 1024l).build();
 		Upload upload = tm.upload(bucket, key, new File(filePath));
 		try {
 			waitForCompletion(upload);
