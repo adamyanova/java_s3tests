@@ -374,11 +374,11 @@ public class S3 {
 		try {
 			xfer.waitForCompletion();
 		} catch (AmazonServiceException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		} catch (AmazonClientException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -417,22 +417,22 @@ public class S3 {
 
 	public Upload UploadFileHLAPI(AmazonS3 svc, String bucket, String key, String filePath) {
 		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc)
-				.withMultipartUploadThreshold(100 * 1024 * 1024l).build();
+				.build();
 		Upload upload = tm.upload(bucket, key, new File(filePath));
 		try {
 			waitForCompletion(upload);
 		} catch (AmazonServiceException e) {
 
 		}
-		int waitForDone = 0;
-		if (!upload.isDone() && waitForDone < 10){
-			try {
-				Thread.sleep(10 * 1000l);
-			} catch (InterruptedException e) {
+		// int waitForDone = 0;
+		// if (!upload.isDone() && waitForDone < 10){
+		// 	try {
+		// 		Thread.sleep(10 * 1000l);
+		// 	} catch (InterruptedException e) {
 
-			}
-			waitForDone++;
-		}
+		// 	}
+		// 	waitForDone++;
+		// }
 		return upload;
 	}
 
