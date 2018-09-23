@@ -785,8 +785,8 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		S3.logger.info("File size is: 23 MB");
-		utils.createFile(filePath, 23 * 1024 * 1024);
+		S3.logger.debug(" /n ======== File size is: 53 MB ========/n");
+		utils.createFile(filePath, 53 * 1024 * 1024);
 
 		Upload upl = utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
 
