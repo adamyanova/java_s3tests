@@ -424,15 +424,6 @@ public class S3 {
 		} catch (AmazonServiceException e) {
 
 		}
-		// int waitForDone = 0;
-		// if (!upload.isDone() && waitForDone < 10){
-		// 	try {
-		// 		Thread.sleep(10 * 1000l);
-		// 	} catch (InterruptedException e) {
-
-		// 	}
-		// 	waitForDone++;
-		// }
 		return upload;
 	}
 
