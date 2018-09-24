@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
@@ -80,14 +79,13 @@ public class BucketTest {
 		String bucket_name = utils.getBucketName(prefix);
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 		
-		// doesBucketExistV2 started returning true every time
+		// doesBucketExistV2 started returning true every time (23.09.2018)
 		// the V2 uses a GET method while the depricated doesBucketExist(Sring)
 		// uses a HEAD method to dermine the existance of the buckets
 		AssertJUnit.assertEquals(svc.doesBucketExist(bucket_name), true);
 
 		svc.deleteBucket(bucket_name);
 		AssertJUnit.assertEquals(svc.doesBucketExist(bucket_name), false);
-
 	}
 
 	@Test(description = "distinct buckets return distinct objects")

@@ -1700,12 +1700,6 @@ public class ObjectTest {
 		}
 	}
 
-	// The MultipartCopy test with LL API are commented out due to differences
-	// observed
-	// in the HTTP response of the CopyPart request when running on master and mimic
-	// branches
-	// of Ceph
-
 	@Test(description = "multipart copy for small file using LLAPI, succeeds!")
 	public void testMultipartCopyMultipleSizesLLAPI() {
 
@@ -1828,17 +1822,18 @@ public class ObjectTest {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		utils.createFile(filePath, 23 * 1024 * 1024);
+		utils.createFile(filePath, 53 * 1024 * 1024);
 		String key = "key1";
 
-		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc).build();
+		TransferManager tm = TransferManagerBuilder.standard().withS3Client(svc)
+				.withMultipartUploadThreshold(256 * 1024l).withMinimumUploadPartSize(256 * 1024l).build();
 		Upload myUpload = tm.upload(bucket_name, key, new File(filePath));
 
 		// pause upload
-		long MB = 10;
 		TransferProgress progress = myUpload.getProgress();
-		while (progress.getBytesTransferred() < MB)
-			Thread.sleep(2000);
+		long MB = 5 * 1024 * 1024l;
+		while (progress.getBytesTransferred() < MB) 
+			Thread.sleep(200);
 
 		if (progress.getBytesTransferred() < progress.getTotalBytesToTransfer()) {
 			boolean forceCancel = true;
