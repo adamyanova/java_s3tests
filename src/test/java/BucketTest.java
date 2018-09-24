@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
@@ -51,14 +52,11 @@ public class BucketTest {
 	public void testBucketDeleteNotExist() {
 
 		String bucket_name = utils.getBucketName(prefix);
-		AssertJUnit.assertEquals(svc.doesBucketExistV2(bucket_name), false);
 		try {
-
 			svc.deleteBucket(bucket_name);
 		} catch (AmazonServiceException err) {
 			AssertJUnit.assertEquals(err.getErrorCode(), "NoSuchBucket");
 		}
-
 	}
 
 	@Test(description = "deleting non empty bucket returns BucketNotEmpty")
@@ -81,10 +79,14 @@ public class BucketTest {
 
 		String bucket_name = utils.getBucketName(prefix);
 		svc.createBucket(new CreateBucketRequest(bucket_name));
-		AssertJUnit.assertEquals(svc.doesBucketExistV2(bucket_name), true);
+		
+		// doesBucketExistV2 started returning true every time
+		// the V2 uses a GET method while the depricated doesBucketExist(Sring)
+		// uses a HEAD method to dermine the existance of the buckets
+		AssertJUnit.assertEquals(svc.doesBucketExist(bucket_name), true);
 
 		svc.deleteBucket(bucket_name);
-		AssertJUnit.assertEquals(svc.doesBucketExistV2(bucket_name), false);
+		AssertJUnit.assertEquals(svc.doesBucketExist(bucket_name), false);
 
 	}
 
