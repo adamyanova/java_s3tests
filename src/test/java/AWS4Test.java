@@ -727,55 +727,54 @@ public class AWS4Test {
 	// in the HTTP response of the CopyPart request when running on master and mimic branches
 	// of Ceph
 
-	// @Test(description = "multipart copy for small file using LLAPI, succeeds!")
-	// public void testMultipartCopyMultipleSizesLLAPIAWS4() {
+	@Test(description = "multipart copy for small file using LLAPI, succeeds!")
+	public void testMultipartCopyMultipleSizesLLAPIAWS4() {
 
-	// 	String src_bkt = utils.getBucketName(prefix);
-	// 	String dst_bkt = utils.getBucketName(prefix);
-	// 	String key = "key1";
+		String src_bkt = utils.getBucketName(prefix);
+		String dst_bkt = utils.getBucketName(prefix);
+		String key = "key1";
 
-	// 	svc.createBucket(new CreateBucketRequest(src_bkt));
-	// 	svc.createBucket(new CreateBucketRequest(dst_bkt));
+		svc.createBucket(new CreateBucketRequest(src_bkt));
+		svc.createBucket(new CreateBucketRequest(dst_bkt));
 
-	// 	String filePath = "./data/file.mpg";
-	// 	utils.createFile(filePath, 23 * 1024 * 1024);
-	// 	File file = new File(filePath);
-	// 	// Upload upl = utils.UploadFileHLAPI(svc, src_bkt, key, filePath);
+		String filePath = "./data/file.mpg";
+		utils.createFile(filePath, 23 * 1024 * 1024);
+		File file = new File(filePath);
 
-	// 	ObjectMetadata metadata = new ObjectMetadata();
-	// 	metadata.setContentLength(file.length());
+		ObjectMetadata metadata = new ObjectMetadata();
+		metadata.setContentLength(file.length());
 
-	// 	try {
-	// 		svc.putObject(new PutObjectRequest(src_bkt, key, file));
-	// 	} catch (AmazonServiceException err) {
+		try {
+			svc.putObject(new PutObjectRequest(src_bkt, key, file));
+		} catch (AmazonServiceException err) {
 			
-	// 	}
+		}
 
-	// 	CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			5 * 1024 * 1024);
-	// 	svc.completeMultipartUpload(resp);
+		CompleteMultipartUploadRequest resp = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				5 * 1024 * 1024);
+		svc.completeMultipartUpload(resp);
 
-	// 	CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			5 * 1024 * 1024 + 100 * 1024);
-	// 	svc.completeMultipartUpload(resp2);
+		CompleteMultipartUploadRequest resp2 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				5 * 1024 * 1024 + 100 * 1024);
+		svc.completeMultipartUpload(resp2);
 
-	// 	CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			5 * 1024 * 1024 + 600 * 1024);
-	// 	svc.completeMultipartUpload(resp3);
+		CompleteMultipartUploadRequest resp3 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				5 * 1024 * 1024 + 600 * 1024);
+		svc.completeMultipartUpload(resp3);
 
-	// 	CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			10 * 1024 * 1024 + 100 * 1024);
-	// 	svc.completeMultipartUpload(resp4);
+		CompleteMultipartUploadRequest resp4 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				10 * 1024 * 1024 + 100 * 1024);
+		svc.completeMultipartUpload(resp4);
 
-	// 	CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			10 * 1024 * 1024 + 600 * 1024);
-	// 	svc.completeMultipartUpload(resp5);
+		CompleteMultipartUploadRequest resp5 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				10 * 1024 * 1024 + 600 * 1024);
+		svc.completeMultipartUpload(resp5);
 
-	// 	CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
-	// 			10 * 1024 * 1024);
-	// 	svc.completeMultipartUpload(resp6);
+		CompleteMultipartUploadRequest resp6 = utils.multipartCopyLLAPI(svc, dst_bkt, key, src_bkt, key,
+				10 * 1024 * 1024);
+		svc.completeMultipartUpload(resp6);
 
-	// }
+	}
 
 	@Test(description = "Upload of a file using HLAPI, succeeds!")
 	public void testUploadFileHLAPIBigFileAWS4() {
@@ -785,8 +784,8 @@ public class AWS4Test {
 		svc.createBucket(new CreateBucketRequest(bucket_name));
 
 		String filePath = "./data/file.mpg";
-		System.out.print(" /n ======== File size is: 253 MB ========/n");
-		utils.createFile(filePath, 253 * 1024 * 1024);
+		System.out.print(" /n ======== File size is: 53 MB ========/n");
+		utils.createFile(filePath, 53 * 1024 * 1024);
 
 		Upload upl = utils.UploadFileHLAPI(svc, bucket_name, key, filePath);
 
